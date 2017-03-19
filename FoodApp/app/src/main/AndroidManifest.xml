@@ -20,11 +20,6 @@
         <activity android:name=".NutritionActivity" />
         <activity android:name=".FoodActivity"></activity>
 
-        <activity
-            android:name=".searchfood"
-            android:label="@string/title_activity_searchfood"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
 
 </manifest>

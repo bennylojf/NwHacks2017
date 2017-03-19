@@ -1,6 +1,7 @@
 package com.example.james.foodapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 //trylogin = true;
                                 Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(MainActivity.this, FoodActivity.class);
+                                startActivity(i);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
