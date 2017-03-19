@@ -24,11 +24,10 @@ import butterknife.InjectView;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
-    private final String SecretKey = "12345";
+    //private final String SecretKey = "12345";
     private FirebaseAuth firebaseAuth;
 
     @InjectView(R.id.input_name) EditText _nameText;
-    @InjectView(R.id.input_registrationKey) EditText _registrationKeyText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_signup) Button _signupButton;
     @InjectView(R.id.link_login) TextView _loginLink;
@@ -104,8 +103,6 @@ public class SignupActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        Intent intent = new Intent(getApplicationContext(), SignupFacialRecActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -119,7 +116,6 @@ public class SignupActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
-        String registrationKey = _registrationKeyText.getText().toString();
         String password = _passwordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
@@ -129,12 +125,7 @@ public class SignupActivity extends AppCompatActivity {
             _nameText.setError(null);
         }
 
-        if (registrationKey.isEmpty() || !registrationKey.equalsIgnoreCase(SecretKey)) {
-            _registrationKeyText.setError("Invalid Registration Key");
-            valid = false;
-        } else {
-            _registrationKeyText.setError(null);
-        }
+
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");

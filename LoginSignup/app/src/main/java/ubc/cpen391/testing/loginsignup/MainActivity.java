@@ -120,8 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        Intent intent = new Intent(getApplicationContext(), Bluetooth_detect.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(), Bluetooth_detect.class);
+        //startActivity(intent);
+        finish();
     }
 
     public void onLoginFailed() {
