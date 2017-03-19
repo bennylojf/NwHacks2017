@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,45 +20,29 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
-
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    private FirebaseAuth firebaseAuth;
-    private boolean trylogin;
-
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-
-    // UI references.
+public class SignupActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     private ProgressDialog dialog;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signup);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
         dialog = new ProgressDialog(this);
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        RadioButton sedentaryButton = (RadioButton) findViewById(R.id.sedentary);
+        RadioButton normalButton = (RadioButton) findViewById(R.id.normal);
+        RadioButton healthyButton = (RadioButton) findViewById(R.id.active);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -69,17 +54,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+    Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        @Override
+        public void onClick(View view) {
+            attemptLogin();
+        }
+    });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-    }
+    mLoginFormView = findViewById(R.id.login_form);
+    mProgressView = findViewById(R.id.login_progress);
+}
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -89,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private void attemptLogin() {
 
         // Reset errors.
-        trylogin = false;
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
@@ -133,22 +117,19 @@ public class MainActivity extends AppCompatActivity {
             dialog.setMessage("Registering user...");
             dialog.show();
 
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             dialog.hide();
                             if(task.isSuccessful()) {
                                 //trylogin = true;
-                                Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(MainActivity.this, FoodActivity.class);
-                                startActivity(i);
+                                Toast.makeText(SignupActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                             else {
-                                Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
 
-                                Intent i = new Intent(MainActivity.this, SignupActivity.class);
-                                startActivity(i);
 
                             }
                         }
@@ -164,5 +145,23 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.sedentary:
+                if (checked)
+                    break;
+            case R.id.normal:
+                if (checked)
+                    break;
+            case R.id.active:
+                if (checked)
+                    break;
+        }
     }
 }

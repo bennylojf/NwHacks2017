@@ -51,6 +51,8 @@
                 android:textColor="@color/colorPrimaryLight" />
 
 
+
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -65,5 +67,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

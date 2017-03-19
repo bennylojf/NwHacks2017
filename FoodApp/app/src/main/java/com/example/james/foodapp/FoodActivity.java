@@ -15,6 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +31,11 @@ import java.util.regex.Pattern;
 public class FoodActivity extends AppCompatActivity {
     SearchFood mFatSecretSearch;
     String searchDescription;
+    private FirebaseAuth firebaseAuth;
     TextView view;
     ArrayList<Double> calist;
     ListView infolist;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,11 @@ public class FoodActivity extends AppCompatActivity {
         final EditText foodText = (EditText) findViewById(R.id.editTextFood);
         mFatSecretSearch = new SearchFood();
         calist = new ArrayList<Double>();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +69,14 @@ public class FoodActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+
+    private void saveUserInfo() {
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        databaseReference.child(user.getUid()).setValue(calist.get(1));
 
     }
     private void loadWeatherData(String food) {
@@ -121,6 +141,7 @@ public class FoodActivity extends AppCompatActivity {
                 }
 
                 loadList(name);
+                saveUserInfo();
             }
 
         }
@@ -142,10 +163,10 @@ public class FoodActivity extends AppCompatActivity {
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, hi);
         infolist.setAdapter(adapter);
-        infolist.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
+      //  infolist.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 
     }
-
+/*
     private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
     {
         public void onItemClick (AdapterView<?> av, View v, int arg2, long arg3)
@@ -153,16 +174,16 @@ public class FoodActivity extends AppCompatActivity {
             // Get the device MAC address, the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
-/*
+
             // Make an intent to start next activity.
             Intent i = new Intent(DeviceListActivity.this, ControllerActivity.class);
 
             //Change the activity.
             i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
             startActivity(i);
-            */
+
         }
     };
-
+*/
 
 }

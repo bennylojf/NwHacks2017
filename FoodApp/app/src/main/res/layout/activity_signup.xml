@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context="com.example.james.foodapp.SignupActivity">
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimaryLight" />
+
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="too short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimaryLight" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="Whats your activity level?"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/active"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/sedentary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sedentary"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="14sp"
+                android:onClick="onRadioButtonClicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.448"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.306" />
+
+            <RadioButton
+                android:id="@+id/active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Active"
+                android:onClick="onRadioButtonClicked"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/sedentary"
+                app:layout_constraintHorizontal_bias="0.415"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.747" />
+
+            <RadioButton
+                android:id="@+id/normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal"
+                android:onClick="onRadioButtonClicked"
+                android:textColor="@color/colorPrimaryLight"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sedentary"
+                app:layout_constraintVertical_bias="0.086"
+                app:layout_constraintHorizontal_bias="0.424" />
+
+            <Button
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
+                android:text="Sign In"
+                android:textColorHighlight="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimaryLight"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
