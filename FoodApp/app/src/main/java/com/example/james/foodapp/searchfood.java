@@ -103,7 +103,8 @@ public class SearchFood {
                 "oauth_nonce=" + nonce(),               // A randomly generated string for a request that can be combined with the timestamp to produce a unique value
                 "oauth_version=1.0",                    // MUST be "1.0"
                 "format=json",                          // The desired response format. Valid reponse formats are "xml" or "json" (default value is "xml").// The zero-based offset into the results for the query. Use this parameter with max_results to request successive pages of search results (default value is 0).
-                "max_results=" + 1};                   // The maximum number of results to return (default value is 20). This number cannot be greater than 50.
+                "max_results=" + 1,
+                "generic_description=portion"};                   // The maximum number of results to return (default value is 20). This number cannot be greater than 50.
     }
 
     private static String sign(String method, String uri, String[] params) {

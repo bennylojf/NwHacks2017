@@ -1,12 +1,17 @@
 package com.example.james.foodapp;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +19,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FoodActivity extends AppCompatActivity {
     SearchFood mFatSecretSearch;
     String searchDescription;
     TextView view;
+    ArrayList<Double> calist;
+    ListView infolist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +36,25 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         Button enter = (Button) findViewById(R.id.enter);
-        view = (TextView) findViewById(R.id.foodText);
+        infolist = (ListView) findViewById(R.id.listView);
         final EditText foodText = (EditText) findViewById(R.id.editTextFood);
         mFatSecretSearch = new SearchFood();
+        calist = new ArrayList<Double>();
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String foodStr = foodText.getText().toString();
-                Toast msg = Toast.makeText(getBaseContext(), "Updating Daily Profile", Toast.LENGTH_LONG);
-                msg.show();
-                // send to fire base
-                loadWeatherData(foodStr);
-
-
-
+                if(foodStr.isEmpty()) {
+                    Toast msg = Toast.makeText(getBaseContext(), "Please enter something", Toast.LENGTH_LONG);
+                    msg.show();
+                }
+                else {
+                    Toast msg = Toast.makeText(getBaseContext(), "Updating Daily Profile", Toast.LENGTH_LONG);
+                    msg.show();
+                    // send to fire base
+                    loadWeatherData(foodStr);
+                }
             }
         });
 
@@ -59,43 +74,33 @@ public class FoodActivity extends AppCompatActivity {
                 return null;
             }
             String description = "error";
+            String foodname = "";
+            String foodespt = "";
             String getfood = params[0];
             JSONObject food = mFatSecretSearch.searchFood(getfood);
 
-           /*
-            try {
-                if (food != null) {
-                    FOODS_ARRAY = food.getJSONArray("food");
-                    if (FOODS_ARRAY != null) {
 
-                        JSONObject food_items = FOODS_ARRAY.optJSONObject(0);
-
-                        description = food_items.getString("food_id");
-
-
-
-                    }
-                }
-            } catch (JSONException exception) {
-                exception.printStackTrace();
-            }
-*/
-            JSONObject food1;
+            JSONObject food1 = null;
             try {
                 food1 = food.getJSONObject("food");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            //JSONObject food2;
             try {
-                description = food.getString("food");
+                foodespt = food1.getString("food_description");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-            return description;
+            try {
+                foodname = food1.getString("food_name");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return foodname + "," + foodespt;
         }
 
         @Override
@@ -105,7 +110,17 @@ public class FoodActivity extends AppCompatActivity {
                 Toast.makeText(FoodActivity.this, "No Items Containing Your Search", Toast.LENGTH_SHORT).show();
             }
             else {
-                view.setText(result);
+                calist.clear();
+                String name = result.substring(0, result.indexOf(","));
+                String des = result.substring(result.indexOf(",") + 1, result.length());
+                Matcher m = Pattern.compile("-?\\d+(\\.\\d+)?").matcher(des);
+
+                while(m.find()) {
+                    double value = Double.parseDouble(m.group());
+                    calist.add(value);
+                }
+
+                loadList(name);
             }
 
         }
@@ -113,57 +128,41 @@ public class FoodActivity extends AppCompatActivity {
 
 
 
-/*
-    private void searchFood(final String item, final int page_num) {
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                view.setText("");
-            }
+    //To show a list of bluetooth paired Devices
+    private void loadList(String name)
+    {
+        ArrayList<String> hi = new ArrayList<String>();
 
-            @Override
-            protected String doInBackground(String... arg0) {
-                String description = "Error";
-                JSONObject food = mFatSecretSearch.searchFood(item, 0);
-
-                JSONArray FOODS_ARRAY;
-                try {
-                    if (food != null) {
-                        FOODS_ARRAY = food.getJSONArray("food");
-                        if (FOODS_ARRAY != null) {
-
-                            JSONObject food_items = FOODS_ARRAY.optJSONObject(0);
-
-                            description = food_items.getString("food_id");
+        hi.add(0, "Type of food: " + name);
+        hi.add(1, "Calories per portion: " + Double.toString(calist.get(1)) + "kcal");
+        hi.add(2, "Fat: " + Double.toString(calist.get(2)) + "g");
+        hi.add(3, "Carbs: " + Double.toString(calist.get(3)) + "g");
+        hi.add(4, "Protein: " + Double.toString(calist.get(4)) + "g");
 
 
+        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, hi);
+        infolist.setAdapter(adapter);
+        infolist.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 
-                        }
-                    }
-                } catch (JSONException exception) {
-                    return "Error";
-                }
-
-                return description;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-                if (result.equals("Error")) {
-                    Toast.makeText(FoodActivity.this, "No Items Containing Your Search", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    view.setText(result);
-                }
-
-            }
-        }.execute();
     }
-    */
 
+    private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
+    {
+        public void onItemClick (AdapterView<?> av, View v, int arg2, long arg3)
+        {
+            // Get the device MAC address, the last 17 chars in the View
+            String info = ((TextView) v).getText().toString();
+            String address = info.substring(info.length() - 17);
+/*
+            // Make an intent to start next activity.
+            Intent i = new Intent(DeviceListActivity.this, ControllerActivity.class);
 
+            //Change the activity.
+            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+            startActivity(i);
+            */
+        }
+    };
 
 
 }
