@@ -45,6 +45,7 @@ public class FoodActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private Double usercalories;
     private Button goalbtn;
+    private TextView logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class FoodActivity extends AppCompatActivity {
         calist = new ArrayList<Double>();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        logout = (TextView) findViewById(R.id.link_signup);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         ValueEventListener postListener = new ValueEventListener() {
@@ -97,6 +99,14 @@ public class FoodActivity extends AppCompatActivity {
                     // send to fire base
                     loadWeatherData(foodStr);
                 }
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
