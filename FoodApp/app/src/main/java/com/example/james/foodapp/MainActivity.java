@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_READ_CONTACTS = 0;
 
     private FirebaseAuth firebaseAuth;
+    private boolean trylogin;
 
 
     /**
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private void attemptLogin() {
 
         // Reset errors.
+        trylogin = false;
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if(email == null || password == null) {
+        if(email.equals(null) || password.equals(null)) {
             mPasswordView.setError("Invalid Password");
             focusView = mPasswordView;
             cancel = true;
@@ -130,19 +132,62 @@ public class MainActivity extends AppCompatActivity {
             dialog.setMessage("Registering user...");
             dialog.show();
 
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
+            firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             dialog.hide();
                             if(task.isSuccessful()) {
+                                //trylogin = true;
                                 Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
+                               //trylogin = false;
+                                /*
+                                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                dialog.hide();
+                                                if(task.isSuccessful()) {
+                                                    trylogin = true;
+                                                    Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                                }
+                                                else {
+                                                    //Toast.makeText(MainActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
+                                                    trylogin = false;
+                                                }
+                                            }
+                                        });
+                                        */
                             }
                         }
                     });
+/*
+            if(trylogin) {
+                Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+            }
+            */
+           // else {
+
+/*                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                dialog.hide();
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(MainActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        */
+             //   Toast.makeText(MainActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
+            //}
+
         }
     }
 

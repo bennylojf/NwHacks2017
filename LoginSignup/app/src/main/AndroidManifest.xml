@@ -2,19 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ubc.cpen391.testing.loginsignup">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature
-        android:name="android.hardware.camera.any"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -34,16 +25,6 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SignupFacialRecActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Bluetooth_detect"
-            android:label="@string/title_activity_bluetooth_detect"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ControllerActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

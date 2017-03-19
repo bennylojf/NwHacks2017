@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/trailSecGreen">
+    android:background="@color/trailSecRed">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,13 +12,6 @@
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
-
-        <ImageView android:src="@drawable/logo"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="24dp"
-            android:layout_width="248dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_horizontal" />
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
