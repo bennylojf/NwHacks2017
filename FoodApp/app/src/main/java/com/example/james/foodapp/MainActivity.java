@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private ProgressDialog dialog;
+    private TextView signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
         dialog = new ProgressDialog(this);
+        signup = (TextView) findViewById(R.id.link_signup);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -66,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        signup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -154,9 +168,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
-
-                                Intent i = new Intent(MainActivity.this, SignupActivity.class);
-                                startActivity(i);
 
                             }
                         }

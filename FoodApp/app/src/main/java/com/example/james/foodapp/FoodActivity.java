@@ -242,24 +242,4 @@ public class FoodActivity extends AppCompatActivity {
       //  infolist.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 
     }
-/*
-    private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
-    {
-        public void onItemClick (AdapterView<?> av, View v, int arg2, long arg3)
-        {
-            // Get the device MAC address, the last 17 chars in the View
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
-
-            // Make an intent to start next activity.
-            Intent i = new Intent(DeviceListActivity.this, ControllerActivity.class);
-
-            //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
-            startActivity(i);
-
-        }
-    };
-*/
-
 }

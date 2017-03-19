@@ -27,13 +27,14 @@ public class SignupActivity extends AppCompatActivity {
     private View mLoginFormView;
     private ProgressDialog dialog;
     private FirebaseAuth firebaseAuth;
+    private TextView login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
+        login = (TextView) findViewById(R.id.link_signup);
         firebaseAuth = FirebaseAuth.getInstance();
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
@@ -51,6 +52,14 @@ public class SignupActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                finish();
             }
         });
 
