@@ -35,6 +35,19 @@
         app:layout_constraintVertical_bias="0.034"
         android:layout_toRightOf="@+id/editTextFood"
         android:layout_alignParentTop="true" />
+    <Button
+        android:id="@+id/newgoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Goal"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryLight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.034"
+        android:layout_alignBaseline="@+id/enter"
+        android:layout_alignBottom="@+id/enter"
+        android:layout_toEndOf="@+id/enter"
+        android:layout_toRightOf="@+id/enter" />
 
     <ListView
         android:id="@+id/listView"
@@ -45,20 +58,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/newgoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Goal"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorPrimaryLight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="@id/listView"
-        app:layout_constraintVertical_bias="0.034"
-        android:layout_alignBaseline="@+id/enter"
-        android:layout_alignBottom="@+id/enter"
-        android:layout_toEndOf="@+id/enter"
-        android:layout_toRightOf="@+id/enter" />
 
 
 

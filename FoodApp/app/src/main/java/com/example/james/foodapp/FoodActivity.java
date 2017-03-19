@@ -66,7 +66,9 @@ public class FoodActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 //Toast.makeText(getApplicationContext(), dataSnapshot.getValue().toString(), Toast.LENGTH_LONG).show();
-                usercalories = Double.parseDouble(dataSnapshot.getValue().toString());
+                if(dataSnapshot.getValue() != null) {
+                    usercalories = Double.parseDouble(dataSnapshot.getValue().toString());
+                }
                 // ...
             }
 
