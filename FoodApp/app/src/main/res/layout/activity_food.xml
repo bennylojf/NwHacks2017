@@ -15,10 +15,10 @@
         android:inputType="textPersonName"
         android:text="Feed me"
         android:textColor="@color/colorPrimaryLight"
-        android:layout_toStartOf="@+id/enter"
-        android:layout_alignBottom="@+id/enter"
-        android:layout_toLeftOf="@+id/enter"
-        android:layout_alignTop="@+id/enter" />
+        android:layout_alignTop="@+id/enter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/enter" />
 
     <Button
         android:id="@+id/enter"
@@ -33,12 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.034"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="11dp" />
+        android:layout_toRightOf="@+id/editTextFood" />
 
     <ListView
         android:id="@+id/listView"
@@ -48,6 +43,22 @@
         android:layout_below="@+id/editTextFood"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/newgoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Goal"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryLight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@id/listView"
+        app:layout_constraintVertical_bias="0.034"
+        android:layout_alignBaseline="@+id/enter"
+        android:layout_alignBottom="@+id/enter"
+        android:layout_toEndOf="@+id/enter"
+        android:layout_toRightOf="@+id/enter" />
+
 
 
 </RelativeLayout>

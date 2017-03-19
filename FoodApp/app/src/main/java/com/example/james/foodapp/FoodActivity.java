@@ -41,6 +41,7 @@ public class FoodActivity extends AppCompatActivity {
     ListView infolist;
     private DatabaseReference databaseReference;
     private Double usercalories;
+    private Button goalbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         Button enter = (Button) findViewById(R.id.enter);
+        goalbtn = (Button) findViewById(R.id.newgoal);
         infolist = (ListView) findViewById(R.id.listView);
         final EditText foodText = (EditText) findViewById(R.id.editTextFood);
         mFatSecretSearch = new SearchFood();
@@ -92,13 +94,22 @@ public class FoodActivity extends AppCompatActivity {
             }
         });
 
+
+        goalbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FoodActivity.this, GoalActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
 
     private void saveUserInfo() {
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(calist.get(1));
+        databaseReference.child(user.getUid()).setValue(usercalories);
 
     }
     private void loadWeatherData(String food) {
@@ -163,7 +174,6 @@ public class FoodActivity extends AppCompatActivity {
                 }
 
                 loadList(name);
-                saveUserInfo();
             }
 
         }
@@ -177,12 +187,19 @@ public class FoodActivity extends AppCompatActivity {
         ArrayList<String> hi = new ArrayList<String>();
 
         hi.add(0, "Type of food: " + name);
-        hi.add(1, "Calories per portion: " + Double.toString(calist.get(1)) + "kcal");
+        hi.add(1, "Calories per portion: " + Double.toString(calist.get(1)) + "cal");
         hi.add(2, "Fat: " + Double.toString(calist.get(2)) + "g");
         hi.add(3, "Carbs: " + Double.toString(calist.get(3)) + "g");
         hi.add(4, "Protein: " + Double.toString(calist.get(4)) + "g");
         if(usercalories != null) {
-            hi.add(5, "Current user's calorie intake: " + Double.toString(usercalories));
+            usercalories -= calist.get(1);
+            if(usercalories <= 0) {
+                hi.add(5, "Seriously you need to STOP EATING!!!");
+            }
+            else {
+                hi.add(5, "Current user's allowed calories remaining: " + Double.toString(usercalories));
+            }
+            saveUserInfo();
         }
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, hi);
