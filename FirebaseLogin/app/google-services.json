@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "43935801379",
-    "firebase_url": "https://usernutritioninfo.firebaseio.com",
-    "project_id": "usernutritioninfo",
-    "storage_bucket": "usernutritioninfo.appspot.com"
+    "project_number": "624752450349",
+    "firebase_url": "https://userlogintest-8fcb0.firebaseio.com",
+    "project_id": "userlogintest-8fcb0",
+    "storage_bucket": "userlogintest-8fcb0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:43935801379:android:9a3c7af5fde65f96",
+        "mobilesdk_app_id": "1:624752450349:android:3d48cba5d659695c",
         "android_client_info": {
-          "package_name": "ubc.cpen391.testing.loginsignup"
+          "package_name": "com.example.james.firebaselogin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "43935801379-28o701u0eqg43tblols5765ra78iu6nd.apps.googleusercontent.com",
+          "client_id": "624752450349-msfl30drof0fkiq1mm3i77ou3cgmhoh4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAl2W6SY5UZiv40tpigSspyEip4bUNqY_o"
+          "current_key": "AIzaSyBJq97_b6fMSjIUZM2RMXSS7JyWkcIzmP4"
         }
       ],
       "services": {
