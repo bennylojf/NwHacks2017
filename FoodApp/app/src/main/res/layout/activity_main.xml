@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context="com.example.james.foodapp.MainActivity">
 
     <!-- Login progress -->
@@ -27,29 +28,27 @@
             android:orientation="vertical">
 
 
-
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Prompt Email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1" />
-
-
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimaryLight" />
 
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Prompt Speech"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="too short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" />
-
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="too short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimaryLight" />
 
 
             <Button
@@ -58,7 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
                 android:text="Sign In"
+                android:textColorHighlight="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimaryLight"
                 android:textStyle="bold" />
 
         </LinearLayout>
