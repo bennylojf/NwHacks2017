@@ -118,7 +118,15 @@ public class MainActivity extends AppCompatActivity {
             mEmailView.setError("Please enter something");
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        }
+
+        else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError("Please enter something");
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        else if (!isEmailValid(email)) {
             mEmailView.setError("Invalid Email");
             focusView = mEmailView;
             cancel = true;

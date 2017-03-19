@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,8 +18,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +40,7 @@ public class FoodActivity extends AppCompatActivity {
     ArrayList<Double> calist;
     ListView infolist;
     private DatabaseReference databaseReference;
+    private Double usercalories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +53,27 @@ public class FoodActivity extends AppCompatActivity {
         mFatSecretSearch = new SearchFood();
         calist = new ArrayList<Double>();
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                //Toast.makeText(getApplicationContext(), dataSnapshot.getValue().toString(), Toast.LENGTH_LONG).show();
+                usercalories = Double.parseDouble(dataSnapshot.getValue().toString());
+                // ...
+            }
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        databaseReference.child(user.getUid()).addValueEventListener(postListener);
+
 
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,20 +126,20 @@ public class FoodActivity extends AppCompatActivity {
             try {
                 food1 = food.getJSONObject("food");
             } catch (JSONException e) {
-                e.printStackTrace();
+                return "error";
             }
 
             try {
                 foodespt = food1.getString("food_description");
             } catch (JSONException e) {
-                e.printStackTrace();
+                return "error";
             }
 
 
             try {
                 foodname = food1.getString("food_name");
             } catch (JSONException e) {
-                e.printStackTrace();
+                return "error";
             }
 
             return foodname + "," + foodespt;
@@ -126,7 +148,7 @@ public class FoodActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (result.equals("Error")) {
+            if (result.equals("error")) {
                 Toast.makeText(FoodActivity.this, "No Items Containing Your Search", Toast.LENGTH_SHORT).show();
             }
             else {
@@ -159,7 +181,9 @@ public class FoodActivity extends AppCompatActivity {
         hi.add(2, "Fat: " + Double.toString(calist.get(2)) + "g");
         hi.add(3, "Carbs: " + Double.toString(calist.get(3)) + "g");
         hi.add(4, "Protein: " + Double.toString(calist.get(4)) + "g");
-
+        if(usercalories != null) {
+            hi.add(5, "Current user's calorie intake: " + Double.toString(usercalories));
+        }
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, hi);
         infolist.setAdapter(adapter);
